@@ -40,7 +40,7 @@ async def on_message(message):
         reaction_1 = '⬆️'
         reaction_2 = '⬇️'
 
-        sent_message = await message.channel.send("image to react to") 
+        sent_message = await message.channel.send(file=discord.File('out.png'))
         await sent_message.add_reaction(reaction_1) 
         await sent_message.add_reaction(reaction_2) 
 
