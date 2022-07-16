@@ -23,7 +23,7 @@ async def on_message(message):
         return
 
     if message.content.startswith('$leaderboard'):
-        with open('score.json', 'r') as f:
+        with open('leaderboard.json', 'r') as f:
             data = json.load(f)
 
         top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
@@ -46,14 +46,34 @@ async def on_message(message):
             scores = json.load(fp)
             higher = scores['higher'] 
             lower = scores['lower']    
+
+
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 5", color=0x00ff00) #creates embed
+        file = discord.File("out.png", filename="out.png")
+        embed.set_image(url="attachment://out.png")
+        sent_message = await message.channel.send(file=file, embed=embed)
    
            
-
-        sent_message = await message.channel.send(file=discord.File('out.png'))
+        # sent_message = await message.channel.send(file=discord.File('out.png'))
         await sent_message.add_reaction(reaction_1) 
         await sent_message.add_reaction(reaction_2) 
 
-        time.sleep(5)
+        time.sleep(1)
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 4", color=0x00ff00) #creates embed
+        await sent_message.edit(embed=embed)
+        time.sleep(1)
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 3", color=0x00ff00) #creates embed
+        await sent_message.edit(embed=embed)
+        time.sleep(1)
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 2", color=0x00ff00) #creates embed
+        await sent_message.edit(embed=embed)
+        time.sleep(1)
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 1", color=0x00ff00) #creates embed
+        await sent_message.edit(embed=embed)
+        file = discord.File("done.png", filename="done.png")
+        embed.set_image(url="attachment://done.png")
+        await sent_message.edit(file=file, embed=embed)
+
 
         await message.channel.send('times up!')
         updated_message = await message.channel.fetch_message(sent_message.id)
@@ -71,7 +91,7 @@ async def on_message(message):
                                 #print(f'added {user} to ones')
                                 #print(user.name)
 
-                                filename = './score.json'
+                                filename = './leaderboard.json'
                                 dictObj = []
                                 
                                 with open(filename) as fp:
@@ -99,7 +119,7 @@ async def on_message(message):
                                 #print(f'added {user} to twos')
                                 #print(user.name)
                                
-                                filename = './score.json'
+                                filename = './leaderboard.json'
                                 dictObj = []
                                 
                                 with open(filename) as fp:
