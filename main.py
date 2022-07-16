@@ -58,18 +58,7 @@ async def on_message(message):
         await sent_message.add_reaction(reaction_1) 
         await sent_message.add_reaction(reaction_2) 
 
-        time.sleep(1)
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 4", color=0x00ff00) #creates embed
-        await sent_message.edit(embed=embed)
-        time.sleep(1)
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 3", color=0x00ff00) #creates embed
-        await sent_message.edit(embed=embed)
-        time.sleep(1)
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 2", color=0x00ff00) #creates embed
-        await sent_message.edit(embed=embed)
-        time.sleep(1)
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description="You have 1", color=0x00ff00) #creates embed
-        await sent_message.edit(embed=embed)
+        time.sleep(5)
         file = discord.File("done.png", filename="done.png")
         embed.set_image(url="attachment://done.png")
         await sent_message.edit(file=file, embed=embed)
