@@ -4,8 +4,8 @@ from PIL import ImageDraw
 from pathlib import Path
 
 # Define images and names
-path1 = 'images/Toothbrush.png'
-path2 = 'images/America.png'
+path1 = 'images/America.png'
+path2 = 'images/Toothbrush.png'
 im1 = Image.open(path1)
 im2 = Image.open(path2)
 im1_name = str(Path(path1).stem)
@@ -25,26 +25,42 @@ dst = dst.filter(ImageFilter.BoxBlur(3))
 
 # Add text
 draw = ImageDraw.Draw(dst)
-top_font = ImageFont.truetype("data/cera.otf", 90)
-small_font = ImageFont.truetype("data/cera.otf", 30)
-main_font = ImageFont.truetype("data/cera.otf", 100)
+top_font = ImageFont.truetype("data/cera.otf", 140)
+small_font = ImageFont.truetype("data/cera.otf", 70)
+main_font = ImageFont.truetype("data/cera.otf", 190)
+or_font = ImageFont.truetype("data/cera.otf", 100)
 
-im1_width = 600
-im2_width = 1750
+im1_width = 560.2
+im2_width = 1685.2
 
-draw.text((im1_width, 770/2),f'"{im1_name}"',(245,147,66),font=top_font,anchor="mm")
-draw.text((im2_width, 770/2),f'"{im2_name}"',(245,147,66),font=top_font,anchor="mm")
-draw.text((im1_width, 930/2),'has',(255,255,255),font=small_font,anchor="mm")
-draw.text((im2_width, 930/2),'has',(255,255,255),font=small_font,anchor="mm")
-draw.text((im1_width, 1100/2),im1_results,(245,198,69),font=main_font,anchor="mm")
-draw.text((im2_width, 1100/2),im2_results,(245,198,69),font=main_font,anchor="mm")
-draw.text((im1_width, 1280/2),'results on the internet',(255,255,255),font=small_font,anchor="mm")
-draw.text((im2_width, 1280/2),'results on the internet',(255,255,255),font=small_font,anchor="mm")
+im1_height = 560
+im2_height = 560
+
+# Results text
+draw.text((im1_width, im1_height),f'"{im1_name}"',(245,147,66),font=top_font,anchor="mm")
+draw.text((im2_width, im2_height),f'"{im2_name}"',(245,147,66),font=top_font,anchor="mm")
+draw.text((im1_width, im1_height*1.22),'has',(255,255,255),font=small_font,anchor="mm")
+draw.text((im2_width, im2_height*1.22),'has',(255,255,255),font=small_font,anchor="mm")
+draw.text((im1_width, im1_height*1.5),im1_results,(245,198,69),font=main_font,anchor="mm")
+#draw.text((im2_width, im2_height*1.5),im2_results,(245,198,69),font=main_font,anchor="mm")
+draw.text((im1_width, im1_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
+draw.text((im2_width, im2_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
+draw.text((im2_width, im2_height*1.48),'or',(245,198,69),font=or_font,anchor="mm")
 
 # Add VS
 vs = Image.open('data/vs.png').convert("RGBA")
 vs = vs.resize((128, 128))
 dst.paste(vs, (1062,700), mask = vs)
+
+# Add arrows
+up = Image.open('data/up_arrow.png').convert("RGBA")
+down = Image.open('data/down_arrow.png').convert("RGBA")
+up = up.resize((170, 170))
+down = down.resize((170, 170))
+dst.paste(up, (1400,750), mask = up)
+dst.paste(down, (1800,750), mask = down)
+
+
 
 dst.show()
 dst.save('out.png')
