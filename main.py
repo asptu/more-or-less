@@ -2,7 +2,7 @@ import time
 import discord
 import os
 import json
-from score import *  
+from concatenate import create
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -39,6 +39,13 @@ async def on_message(message):
     if message.content.startswith('$start'):
         reaction_1 = '⬆️'
         reaction_2 = '⬇️'
+        print('creating...')
+        create()
+        print('done')
+        with open('./scores.json') as fp:
+            scores = json.load(fp)
+            higher = scores['higher']    
+           
 
         sent_message = await message.channel.send(file=discord.File('out.png'))
         await sent_message.add_reaction(reaction_1) 
@@ -77,7 +84,7 @@ async def on_message(message):
                                             file.seek(0)
                                             json.dump(dictObj, file, indent = 4)
 
-                                dictObj.update({str(user.id): dictObj[str(user.id)] + reaction1_score,})
+                                dictObj.update({str(user.id): dictObj[str(user.id)] + higher,})
 
                                 with open(filename, 'w') as json_file:
                                     json.dump(dictObj, json_file, 
@@ -105,7 +112,7 @@ async def on_message(message):
                                             file.seek(0)
                                             json.dump(dictObj, file, indent = 4)
 
-                                dictObj.update({str(user.id): dictObj[str(user.id)] + reaction2_score,})
+                                dictObj.update({str(user.id): dictObj[str(user.id)] + lower,})
 
                                 with open(filename, 'w') as json_file:
                                     json.dump(dictObj, json_file, 
