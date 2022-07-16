@@ -44,7 +44,9 @@ async def on_message(message):
         print('done')
         with open('./scores.json') as fp:
             scores = json.load(fp)
-            higher = scores['higher']    
+            higher = scores['higher'] 
+            lower = scores['lower']    
+   
            
 
         sent_message = await message.channel.send(file=discord.File('out.png'))
