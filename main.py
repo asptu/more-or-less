@@ -16,6 +16,8 @@ client = discord.Client(intents=intents)
 
 message_id = []
 channel_id = []
+leaderboard_id = []
+leaderboard_channel = []
 
 @client.event
 async def on_ready():
@@ -85,7 +87,6 @@ async def on_message(message):
         ones = set()
         twos = set()
 
-
         for reaction in updated_message.reactions:
             async for user in reaction.users():
                     if not user.bot:
@@ -145,7 +146,23 @@ async def on_message(message):
                                     json.dump(dictObj, json_file, 
                                                         indent=4,  
                                                         separators=(',',': '))
-        leaderboard.send()      
+
+        leaderboard_channel = await client.fetch_channel(1000226480401416254)
+
+        with open('leaderboard.json', 'r') as f:
+            data = json.load(f)
+
+        top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
+
+        names = ''
+        for postion, user in enumerate(top_users):
+            names += f'{postion+1} - <@!{user}> with {top_users[user]}\n'
+
+        embed = discord.Embed(title="Leaderboard")
+        embed.add_field(name="Names", value=names, inline=False)
+        leaderboard = await leaderboard_channel.send(embed=embed)
+        leaderboard_id.clear()
+        leaderboard_id.append(leaderboard.id)     
                                 
     if message.content.startswith('$next'):
 
@@ -251,7 +268,22 @@ async def on_message(message):
                                     json.dump(dictObj, json_file, 
                                                         indent=4,  
                                                         separators=(',',': '))
+                                                        
+        leaderboard_channel = await client.fetch_channel(1000226480401416254)
+        updated_message = await leaderboard_channel.fetch_message(leaderboard_id[0])
 
+        with open('leaderboard.json', 'r') as f:
+            data = json.load(f)
+
+        top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
+
+        names = ''
+        for postion, user in enumerate(top_users):
+            names += f'{postion+1} - <@!{user}> with {top_users[user]}\n'
+
+        embed = discord.Embed(title="Leaderboard")
+        embed.add_field(name="Names", value=names, inline=False)
+        await updated_message.edit(embed=embed) 
                 
            
 
