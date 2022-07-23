@@ -1,4 +1,3 @@
-from multiprocessing.connection import wait
 import time
 import discord
 import os
@@ -85,7 +84,6 @@ async def on_message(message):
         embed.set_image(url="attachment://done.png")
         await sent_message.edit(file=file, embed=embed)
 
-
         updated_message = await message.channel.fetch_message(sent_message.id)
         ones = set()
         twos = set()
@@ -150,7 +148,6 @@ async def on_message(message):
                                                         indent=4,  
                                                         separators=(',',': '))
 
-
         lchannel = await client.fetch_channel(leaderboard_channel[0])
 
         with open('leaderboard.json', 'r') as f:
@@ -212,7 +209,6 @@ async def on_message(message):
         updated_message = await channel.fetch_message(sent_message.id)
         ones = set()
         twos = set()
-
 
         for reaction in updated_message.reactions:
             async for user in reaction.users():
@@ -301,7 +297,6 @@ async def on_message(message):
         await l_message.delete()
         await message.delete()
         
-
     if message.content.startswith('$extrapoints'):
         role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
         if role not in message.author.roles:
