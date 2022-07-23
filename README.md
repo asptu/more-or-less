@@ -1,4 +1,4 @@
-# Discord More or Less (Higher or Lower) WIP
+# Discord More or Less (Higher or Lower)
 
 Based off of http://www.higherlowergame.com/ Discord More or Less essentially just ports the experience to your server with a couple of commands to set everything off
 
