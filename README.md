@@ -17,5 +17,5 @@ Probably one of my most elaborate stupid discord games
 - [x] Fix comparing results as sometimes smaller values are treated as larger?
 - [x] Make a proper embed (also wip)
 - [x] Make a countdown timer (pretty sketch, need to make better)
-- [ ] Add double points command
-- [ ] OPTIMISE THE HELL OUT OF THIS ONE
+- [x] Add double points command
+- [ ] OPTIMISE THE HELL OUT OF THIS ONE (this will never be finished 💀)

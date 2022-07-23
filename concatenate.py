@@ -40,7 +40,7 @@ def create():
     if rkey1_v > rkey2_v:
         print(f'{rkey1} is bigger than {rkey2}')
         print(f'{rkey1_v} is bigger than {rkey2_v}')
-        scores.update({"lower": 1,})
+        scores.update({"lower": 1 + scores['extra_points'],})
         scores.update({"higher": 0,})
         print(rkey1_v)
         print(rkey2_v)
@@ -56,7 +56,7 @@ def create():
         print(f'{rkey2} is bigger than {rkey1}')
         print(f'{rkey2_v} is bigger than {rkey1_v}')
         scores.update({"lower": 0,})
-        scores.update({"higher": 1,})
+        scores.update({"higher": 1 + scores['extra_points'],})
         print(rkey2_v)
         print(rkey1_v)
 
@@ -66,8 +66,8 @@ def create():
                                 separators=(',',': '))
     else:
         print(f'{rkey2} and {rkey1} are the same')
-        scores.update({"lower": 1,})
-        scores.update({"higher": 1,})
+        scores.update({"lower": 1 + scores['extra_points'],})
+        scores.update({"higher": 1 + scores['extra_points'],})
 
         with open('./scores.json', 'w') as json_file:
             json.dump(scores, json_file, 

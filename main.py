@@ -3,6 +3,7 @@ import discord
 import os
 import json
 from concatenate import create
+from scrape import update
 from datetime import datetime
 from dotenv import load_dotenv
 load_dotenv()
@@ -38,7 +39,7 @@ async def on_message(message):
         for postion, user in enumerate(top_users):
             names += f'{postion+1} - <@!{user}> with {top_users[user]}\n'
 
-        embed = discord.Embed(title="Leaderboard")
+        embed = discord.Embed(title="Leaderboard", color=0x3B88C3)
         embed.add_field(name="Names", value=names, inline=False)
         leaderboard = await message.channel.send(embed=embed)    
   
@@ -56,15 +57,15 @@ async def on_message(message):
             lower = scores['lower']    
 
         dt = datetime.now()
-        timestamp = int( dt.timestamp() )
-        print( timestamp )
+        timestamp = int(dt.timestamp())
         time_left = timestamp + 7
 
         embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x3B88C3) #creates embed
         file = discord.File("out.png", filename="out.png")
         embed.set_image(url="attachment://out.png")
+        print('1')
         sent_message = await message.channel.send(file=file, embed=embed)
-
+        print('2')
         message_id.clear()
         message_id.append(sent_message.id)
 
@@ -82,7 +83,6 @@ async def on_message(message):
         await sent_message.edit(file=file, embed=embed)
 
 
-        await message.channel.send('times up!')
         updated_message = await message.channel.fetch_message(sent_message.id)
         ones = set()
         twos = set()
@@ -147,6 +147,7 @@ async def on_message(message):
                                                         indent=4,  
                                                         separators=(',',': '))
 
+
         lchannel = await client.fetch_channel(leaderboard_channel[0])
 
         with open('leaderboard.json', 'r') as f:
@@ -202,8 +203,6 @@ async def on_message(message):
         embed.set_image(url="attachment://done.png")
         await sent_message.edit(file=file, embed=embed)
 
-
-        await message.channel.send('times up!')
         updated_message = await channel.fetch_message(sent_message.id)
         ones = set()
         twos = set()
@@ -289,6 +288,24 @@ async def on_message(message):
         leaderboard_channel.clear()
         leaderboard_channel.append(message.channel.id)
         await message.channel.send(f'Set leaderboard channel to {message.channel.name}')  
-           
+
+    if message.content.startswith('$extrapoints'):
+        sliced = message.content[13:]
+        print(int(sliced))
+        with open('scores.json', 'r+') as f:
+            data = json.load(f)
+            data['extra_points'] = int(sliced) 
+            f.seek(0)        
+            json.dump(data, f, indent=4)
+            f.truncate() 
+            await message.reply(f'Extrapoints have been set to {sliced}')    
+
+    if message.content.startswith('$update'):
+        sliced = message.content[8:]
+        update(sliced)
+
+        await message.reply(f'updated {sliced}')
+
+
 
 client.run(os.getenv('TOKEN'))

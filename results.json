@@ -1,7 +1,7 @@
 {
     "America": 10810000000,
     "Apple": 8000000000,
-    "Spiderman": 647000000,
+    "Spiderman": 782000000,
     "Skype": 660000000,
     "Gangnam-Style": 34700000,
     "Australia": 7480000000,
@@ -19,5 +19,13 @@
     "Cactus": 404000000,
     "Cat": 5130000000,
     "Dog": 7130000000,
-    "Bottle": 2600000000
+    "Bottle": 2600000000,
+    "Bowl": 2370000000,
+    "Beanie": 413000000,
+    "Spotify": 1140000000,
+    "Steam-Deck": 138000000,
+    "Rocket-League": 122000000,
+    "Discord": 1070000000,
+    "Celeste": 300000000,
+    "Egg": 3010000000
 }
