@@ -7,7 +7,7 @@ import json
 import random
 
 def create():
-    # Get values from results.json and generate random results
+     
     with open('./results.json') as fp:
         d = json.load(fp)
 
@@ -16,7 +16,7 @@ def create():
 
     while rkey1 == rkey2:
         rkey2 = random.choice(list(d.keys()))
-    
+
     rkey1_v = d[rkey1]
     rkey2_v = d[rkey2]
 
@@ -35,20 +35,30 @@ def create():
 
     with open('./scores.json') as fp:
             scores = json.load(fp)
+
+
     if rkey1_v > rkey2_v:
         print(f'{rkey1} is bigger than {rkey2}')
+        print(f'{rkey1_v} is bigger than {rkey2_v}')
         scores.update({"lower": 1,})
         scores.update({"higher": 0,})
+        print(rkey1_v)
+        print(rkey2_v)
+
 
         with open('./scores.json', 'w') as json_file:
             json.dump(scores, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
 
+
     elif rkey1_v < rkey2_v:
         print(f'{rkey2} is bigger than {rkey1}')
+        print(f'{rkey2_v} is bigger than {rkey1_v}')
         scores.update({"lower": 0,})
         scores.update({"higher": 1,})
+        print(rkey2_v)
+        print(rkey1_v)
 
         with open('./scores.json', 'w') as json_file:
             json.dump(scores, json_file, 
@@ -82,9 +92,6 @@ def create():
 
     im1_results = str(rkey1_v_formatted)
     im2_results = str(rkey2_v_formatted)
-
-
-    # Concatenate
     dst = Image.new('RGB', (im1.width + im2.width, im1.height))
     dst.paste(im1, (0, 0))
     dst.paste(im2, (im1.width, 0))
@@ -134,7 +141,6 @@ def create():
     #dst.show()
     dst.save('out.png')
 
-    # Concatenate
     dst = Image.new('RGB', (im1.width + im2.width, im1.height))
     dst.paste(im1, (0, 0))
     dst.paste(im2, (im1.width, 0))
@@ -183,4 +189,4 @@ def create():
 
     dst.save('done.png')
 
-create()
+

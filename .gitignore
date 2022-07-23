@@ -1,3 +1,5 @@
 .env
 login.txt
 \__pycache__
+test.py
+update.py

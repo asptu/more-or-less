@@ -20,7 +20,9 @@ html = raw_response.decode("utf-8")
 soup = BeautifulSoup(html, 'html.parser')
 element = soup.find("div", {"id": "result-stats"})
 formatted1 = re.sub("\(.*?\)","()", element.get_text())
-final_format = re.sub('\D', '', formatted1)
+formatted2 = re.sub('\D', '', formatted1)
+final_format = int(formatted2)
+
 
 filename = './results.json'
 dictObj = []
@@ -33,11 +35,11 @@ if ' ' in search_result:
     if str(search_result_dash) not in dictObj:
         with open(filename,'r+') as file:
                 dictObj = json.load(file)
-                dictObj[str(search_result_dash)] = f"{final_format}"
+                dictObj[str(search_result_dash)] = final_format
                 file.seek(0)
                 json.dump(dictObj, file, indent = 4)
 
-    dictObj.update({search_result_dash: f'{final_format}',})
+    dictObj.update({search_result_dash: final_format,})
 
     with open(filename, 'w') as json_file:
         json.dump(dictObj, json_file, 
@@ -48,11 +50,11 @@ else:
     if str(search_result) not in dictObj:
         with open(filename,'r+') as file:
                 dictObj = json.load(file)
-                dictObj[str(search_result)] = f"{final_format}"
+                dictObj[str(search_result)] = final_format
                 file.seek(0)
                 json.dump(dictObj, file, indent = 4)
 
-    dictObj.update({search_result: f'{final_format}',})
+    dictObj.update({search_result: final_format,})
 
     with open(filename, 'w') as json_file:
         json.dump(dictObj, json_file, 

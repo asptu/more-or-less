@@ -9,12 +9,13 @@ Probably one of my most elaborate stupid discord games
 - **Pycord** (pip install -U py-cord)
 - **BeautifulSoup4** (pip install beautifulsoup4)
 - **dotenv** (pip install python-dotenv)
+- **requests** (pip install requests)
 
 ## Planned Features
 
-- $next command so you dont keep $start(ing) it
-- Fix comparing results as sometimes smaller values are treated as larger?
-- Make a proper embed
-- Make a countdown timer
-- Add double points command
-- OPTIMISE THE HELL OUT OF THIS ONE
+- [x] $next command so you dont keep $start(ing) it
+- [x] Fix comparing results as sometimes smaller values are treated as larger?
+- [x] Make a proper embed (also wip)
+- [x] Make a countdown timer (pretty sketch, need to make better)
+- [ ] Add double points command
+- [ ] OPTIMISE THE HELL OUT OF THIS ONE
