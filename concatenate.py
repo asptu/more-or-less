@@ -20,7 +20,7 @@ def create():
     rkey1_v = d[rkey1]
     rkey2_v = d[rkey2]
 
-    magnitudeDict={0:'', 1:'Thousand', 2:'Million', 3:'Billion', 4:'Trillion', 5:'Quadrillion', 6:'Quintillion', 7:'Sextillion', 8:'Septillion', 9:'Octillion', 10:'Nonillion', 11:'Decillion'}
+    magnitudeDict={0:'', 1:'', 2:'Million', 3:'Billion', 4:'Trillion', 5:'Quadrillion', 6:'Quintillion', 7:'Sextillion', 8:'Septillion', 9:'Octillion', 10:'Nonillion', 11:'Decillion'}
 
     def simplify(num):
         num=floor(num)
@@ -120,7 +120,6 @@ def create():
     draw.text((im1_width, im1_height*1.22),'has',(255,255,255),font=small_font,anchor="mm")
     draw.text((im2_width, im2_height*1.22),'has',(255,255,255),font=small_font,anchor="mm")
     draw.text((im1_width, im1_height*1.5),im1_results,(245,198,69),font=main_font,anchor="mm")
-    #draw.text((im2_width, im2_height*1.5),im2_results,(245,198,69),font=main_font,anchor="mm")
     draw.text((im1_width, im1_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
     draw.text((im2_width, im2_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
     draw.text((im2_width, im2_height*1.48),'or',(245,198,69),font=or_font,anchor="mm")
@@ -172,20 +171,11 @@ def create():
     draw.text((im2_width, im2_height*1.5),im2_results,(245,198,69),font=main_font,anchor="mm")
     draw.text((im1_width, im1_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
     draw.text((im2_width, im2_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
-    #draw.text((im2_width, im2_height*1.48),'or',(245,198,69),font=or_font,anchor="mm")
 
     # Add VS
     vs = Image.open('data/vs.png').convert("RGBA")
     vs = vs.resize((128, 128))
     dst.paste(vs, (1062,700), mask = vs)
-
-    # Add arrows
-    # up = Image.open('data/up_arrow.png').convert("RGBA")
-    # down = Image.open('data/down_arrow.png').convert("RGBA")
-    # up = up.resize((170, 170))
-    # down = down.resize((170, 170))
-    # dst.paste(up, (1400,750), mask = up)
-    # dst.paste(down, (1800,750), mask = down)
 
     dst.save('done.png')
 

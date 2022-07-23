@@ -1,3 +1,4 @@
+from multiprocessing.connection import wait
 import time
 import discord
 import os
@@ -45,6 +46,10 @@ async def on_message(message):
   
     if message.content.startswith('$start'):
 
+        role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+        if role not in message.author.roles:
+            return await message.reply('invalid perms')
+
         reaction_1 = '⬆️'
         reaction_2 = '⬇️'
 
@@ -58,23 +63,21 @@ async def on_message(message):
 
         dt = datetime.now()
         timestamp = int(dt.timestamp())
-        time_left = timestamp + 7
+        time_left = timestamp + 9
 
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x3B88C3) #creates embed
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
         file = discord.File("out.png", filename="out.png")
         embed.set_image(url="attachment://out.png")
-        print('1')
         sent_message = await message.channel.send(file=file, embed=embed)
-        print('2')
+
         message_id.clear()
         message_id.append(sent_message.id)
 
         channel_id.clear()
         channel_id.append(sent_message.channel.id)
            
-        # sent_message = await message.channel.send(file=discord.File('out.png'))
         await sent_message.add_reaction(reaction_1) 
-        await sent_message.add_reaction(reaction_2) 
+        await sent_message.add_reaction(reaction_2)
 
         time.sleep(5)
         embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
@@ -159,13 +162,16 @@ async def on_message(message):
         for postion, user in enumerate(top_users):
             names += f'{postion+1} - <@!{user}> with {top_users[user]}\n'
 
-        embed = discord.Embed(title="Leaderboard")
+        embed = discord.Embed(title="Leaderboard", color=0x3B88C3)
         embed.add_field(name="Names", value=names, inline=False)
         leaderboard = await lchannel.send(embed=embed)
         leaderboard_id.clear()
         leaderboard_id.append(leaderboard.id)     
                                 
     if message.content.startswith('$next'):
+        role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+        if role not in message.author.roles:
+            return await message.reply('invalid perms')
 
         print(message_id[0])
 
@@ -187,9 +193,9 @@ async def on_message(message):
         dt = datetime.now()
         timestamp = int( dt.timestamp() )
         print( timestamp )
-        time_left = timestamp + 7   
+        time_left = timestamp + 9   
 
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x3B88C3) #creates embed
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
         file = discord.File("out.png", filename="out.png")
         embed.set_image(url="attachment://out.png")
         await sent_message.edit(file=file, embed=embed)   
@@ -280,16 +286,26 @@ async def on_message(message):
         for postion, user in enumerate(top_users):
             names += f'{postion+1} - <@!{user}> with {top_users[user]}\n'
 
-        embed = discord.Embed(title="Leaderboard")
+        embed = discord.Embed(title="Leaderboard", color=0x3B88C3)
         embed.add_field(name="Names", value=names, inline=False)
         await updated_message.edit(embed=embed) 
 
     if message.content.startswith('$lchannel'):
+        role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+        if role not in message.author.roles:
+            return await message.reply('invalid perms')
         leaderboard_channel.clear()
         leaderboard_channel.append(message.channel.id)
-        await message.channel.send(f'Set leaderboard channel to {message.channel.name}')  
+        l_message = await message.channel.send(f'Set leaderboard channel to {message.channel.name}')  
+        time.sleep(2)
+        await l_message.delete()
+        await message.delete()
+        
 
     if message.content.startswith('$extrapoints'):
+        role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+        if role not in message.author.roles:
+            return await message.reply('invalid perms')
         sliced = message.content[13:]
         print(int(sliced))
         with open('scores.json', 'r+') as f:
@@ -298,9 +314,12 @@ async def on_message(message):
             f.seek(0)        
             json.dump(data, f, indent=4)
             f.truncate() 
-            await message.reply(f'Extrapoints have been set to {sliced}')    
+            await message.reply(f'Extrapoints have been set to {sliced}') 
 
     if message.content.startswith('$update'):
+        role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+        if role not in message.author.roles:
+            return await message.reply('invalid perms')
         sliced = message.content[8:]
         update(sliced)
 
