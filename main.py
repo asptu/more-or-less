@@ -60,7 +60,7 @@ async def on_message(message):
         print( timestamp )
         time_left = timestamp + 7
 
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x00ff00) #creates embed
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x3B88C3) #creates embed
         file = discord.File("out.png", filename="out.png")
         embed.set_image(url="attachment://out.png")
         sent_message = await message.channel.send(file=file, embed=embed)
@@ -76,7 +76,7 @@ async def on_message(message):
         await sent_message.add_reaction(reaction_2) 
 
         time.sleep(5)
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x00ff00) #creates embed
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
         file = discord.File("done.png", filename="done.png")
         embed.set_image(url="attachment://done.png")
         await sent_message.edit(file=file, embed=embed)
@@ -147,7 +147,7 @@ async def on_message(message):
                                                         indent=4,  
                                                         separators=(',',': '))
 
-        leaderboard_channel = await client.fetch_channel(1000226480401416254)
+        lchannel = await client.fetch_channel(leaderboard_channel[0])
 
         with open('leaderboard.json', 'r') as f:
             data = json.load(f)
@@ -160,7 +160,7 @@ async def on_message(message):
 
         embed = discord.Embed(title="Leaderboard")
         embed.add_field(name="Names", value=names, inline=False)
-        leaderboard = await leaderboard_channel.send(embed=embed)
+        leaderboard = await lchannel.send(embed=embed)
         leaderboard_id.clear()
         leaderboard_id.append(leaderboard.id)     
                                 
@@ -188,7 +188,7 @@ async def on_message(message):
         print( timestamp )
         time_left = timestamp + 7   
 
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x00ff00) #creates embed
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"You have <t:{time_left}:R>", color=0x3B88C3) #creates embed
         file = discord.File("out.png", filename="out.png")
         embed.set_image(url="attachment://out.png")
         await sent_message.edit(file=file, embed=embed)   
@@ -197,7 +197,7 @@ async def on_message(message):
         await sent_message.add_reaction(reaction_2)   
 
         time.sleep(5)
-        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x00ff00) #creates embed
+        embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
         file = discord.File("done.png", filename="done.png")
         embed.set_image(url="attachment://done.png")
         await sent_message.edit(file=file, embed=embed)
@@ -269,8 +269,8 @@ async def on_message(message):
                                                         indent=4,  
                                                         separators=(',',': '))
                                                         
-        leaderboard_channel = await client.fetch_channel(1000226480401416254)
-        updated_message = await leaderboard_channel.fetch_message(leaderboard_id[0])
+        lchannel = await client.fetch_channel(leaderboard_channel[0])
+        updated_message = await lchannel.fetch_message(leaderboard_id[0])
 
         with open('leaderboard.json', 'r') as f:
             data = json.load(f)
@@ -284,7 +284,11 @@ async def on_message(message):
         embed = discord.Embed(title="Leaderboard")
         embed.add_field(name="Names", value=names, inline=False)
         await updated_message.edit(embed=embed) 
-                
+
+    if message.content.startswith('$lchannel'):
+        leaderboard_channel.clear()
+        leaderboard_channel.append(message.channel.id)
+        await message.channel.send(f'Set leaderboard channel to {message.channel.name}')  
            
 
 client.run(os.getenv('TOKEN'))
