@@ -1,9 +1,13 @@
 import urllib.request
 from bs4 import BeautifulSoup
+from PIL import Image, ImageFilter
+from io import BytesIO
+import requests
 import re 
 import json
 
-def update(search_result):
+
+def scrape(search_result):
 
     url = f'https://www.google.com/search?q={search_result}'
 
@@ -23,6 +27,25 @@ def update(search_result):
     formatted2 = re.sub('\D', '', formatted1)
     final_format = int(formatted2)
 
+    # url = "https://www.bing.com/images/search"
+
+    # headers = {
+    #     "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0"
+    # }
+    # params = {"q": {search_result}, "form": "HDRSC2", "first": "1", "scenario": "ImageBasicHover"}
+    # r = requests.get(url, headers=headers, params=params)
+
+    # soup = BeautifulSoup(r.text, "html.parser")
+    # links = soup.find_all("div", {"class": "img_cont hoff"})
+    # one_link = links[1:20]
+    # one_link = re.search("(?P<url>https?://[^\s]+)", str(one_link)).group("url")  
+    # img_object = requests.get(one_link, headers=headers)
+
+    # img = Image.open(BytesIO(img_object.content))
+    # d = img.resize((1125,1500))
+    # d = d.filter(ImageFilter.GaussianBlur(5))
+    # #d.show()
+    # d.save(f'./images/{search_result}.png')
 
     filename = './results.json'
     dictObj = []
@@ -60,4 +83,5 @@ def update(search_result):
             json.dump(dictObj, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
+
 

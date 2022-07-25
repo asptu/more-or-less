@@ -3,7 +3,7 @@ import discord
 import os
 import json
 from concatenate import create
-from scrape import update
+from scrape import scrape
 from datetime import datetime
 from dotenv import load_dotenv
 load_dotenv()
@@ -14,6 +14,7 @@ intents.guild_reactions = True
 intents.reactions = True
 
 client = discord.Client(intents=intents)
+
 
 message_id = []
 channel_id = []
@@ -170,8 +171,7 @@ async def on_message(message):
         if role not in message.author.roles:
             return await message.reply('invalid perms')
 
-        print(message_id[0])
-
+        await message.delete()
         channel = await client.fetch_channel(channel_id[0])
         sent_message = await channel.fetch_message(message_id[0])
         await sent_message.clear_reactions()
@@ -311,14 +311,14 @@ async def on_message(message):
             f.truncate() 
             await message.reply(f'Extrapoints have been set to {sliced}') 
 
-    if message.content.startswith('$update'):
+    if message.content.startswith('$scrape'):
         role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
         if role not in message.author.roles:
             return await message.reply('invalid perms')
         sliced = message.content[8:]
-        update(sliced)
+        scrape(sliced)
 
-        await message.reply(f'updated {sliced}')
+        await message.reply(f'scraped **{sliced}**')
 
 
 

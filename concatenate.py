@@ -20,7 +20,7 @@ def create():
     rkey1_v = d[rkey1]
     rkey2_v = d[rkey2]
 
-    magnitudeDict={0:'', 1:'', 2:'Million', 3:'Billion', 4:'Trillion', 5:'Quadrillion', 6:'Quintillion', 7:'Sextillion', 8:'Septillion', 9:'Octillion', 10:'Nonillion', 11:'Decillion'}
+    magnitudeDict={0:'', 1:'K', 2:'Million', 3:'Billion', 4:'Trillion', 5:'Quadrillion', 6:'Quintillion', 7:'Sextillion', 8:'Septillion', 9:'Octillion', 10:'Nonillion', 11:'Decillion'}
 
     def simplify(num):
         num=floor(num)
