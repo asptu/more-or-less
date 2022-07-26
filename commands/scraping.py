@@ -1,8 +1,6 @@
+import string
 from commands.scrape import scrape
 
-async def scraping(message):
+async def scraping(message, string):
 
-    sliced = message.content[8:]
-    scrape(sliced)
-
-    await message.reply(f'scraped **{sliced}**')
+    scrape(string)

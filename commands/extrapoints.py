@@ -1,13 +1,10 @@
 import json
 
-async def extrapoints(message):
+async def set_extrapoints(message, number):
 
-    sliced = message.content[13:]
-    print(int(sliced))
     with open('./data/scores.json', 'r+') as f:
         data = json.load(f)
-        data['extra_points'] = int(sliced) 
+        data['extra_points'] = int(number) 
         f.seek(0)        
         json.dump(data, f, indent=4)
         f.truncate() 
-        await message.reply(f'Extrapoints have been set to {sliced}') 

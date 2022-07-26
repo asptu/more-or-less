@@ -1,9 +1,11 @@
 # Import Commands
+from pydoc import describe
+import string
 from commands.leaderboard import show_leaderboard
 from commands.start import game_start
 from commands.next import game_next
 from commands.leaderboard_channel import lchannel
-from commands.extrapoints import extrapoints
+from commands.extrapoints import set_extrapoints
 from commands.scraping import scraping
 
 from http import client
@@ -11,6 +13,7 @@ import time
 import discord
 import os
 from dotenv import load_dotenv
+import json
 load_dotenv()
 
 intents = discord.Intents.default()
@@ -19,8 +22,6 @@ intents.guild_reactions = True
 intents.reactions = True
 
 client = discord.Bot(intents=intents)
-
-
 
 @client.event
 async def on_ready():
@@ -76,8 +77,11 @@ async def on_message(message):
         if role not in message.author.roles:
             return await message.reply('invalid perms')
 
+        number = message.content[13:]
+
         print('creating extra points...')
-        await extrapoints(message)
+        await set_extrapoints(message, number)
+        await message.reply(f'Extrapoints have been set to {number}') 
 
     if message.content.startswith('$scrape'):
 
@@ -85,16 +89,18 @@ async def on_message(message):
         if role not in message.author.roles:
             return await message.reply('invalid perms')
 
+        string = message.content[8:]
         print('scraping data...')
-        await scraping(message)
+        await scraping(message, string)
+        await message.reply(f'scraped **{string}**')
 
 
 # Slash Commands
 
 @client.slash_command(guild_ids=[740886739538673664], description="Displays the leaderboard.")
 async def leaderboard(message):
-    await show_leaderboard(message)
     await message.respond('Displaying leaderboard:')
+    await show_leaderboard(message)
 
 @client.slash_command(guild_ids=[740886739538673664], description="Starts the game.")
 async def start(message):
@@ -124,6 +130,17 @@ async def set_channel(message):
 
     await lchannel(message)
     await message.respond(f'Set leaderboard channel to {message.channel.name}', ephemeral=True)    
+
+@client.slash_command(guild_ids=[740886739538673664], description="Adds extrapoints")
+async def extrapoints(message, number: discord.Option(int),):
+    await set_extrapoints(message, number)
+    await message.respond(f'Extrapoints have been set to {number}', ephemeral=True) 
+
+@client.slash_command(guild_ids=[740886739538673664], description="Adds extrapoints")
+async def scrape(message, string: discord.Option(str),):
+    await scraping(message, string)
+    await message.respond(f'Scraped {string}', ephemeral=True) 
+
 
 
 client.run(os.getenv('TOKEN'))
