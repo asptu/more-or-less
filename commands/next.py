@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 
 
-async def next(message):
+async def game_next(message):
     role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
     if role not in message.author.roles:
         return await message.reply('invalid perms')

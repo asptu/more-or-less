@@ -5,7 +5,7 @@ from concatenate import create
 from datetime import datetime
 import time
 
-async def start(message):  
+async def game_start(message):  
     role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
     if role not in message.author.roles:
         return await message.reply('invalid perms')
