@@ -39,11 +39,11 @@ def create():
 
     if rkey1_v > rkey2_v:
         print(f'{rkey1} is bigger than {rkey2}')
-        print(f'{rkey1_v} is bigger than {rkey2_v}')
+        # print(f'{rkey1_v} is bigger than {rkey2_v}')
         scores.update({"lower": 1 + scores['extra_points'],})
         scores.update({"higher": 0,})
-        print(rkey1_v)
-        print(rkey2_v)
+        # print(rkey1_v)
+        # print(rkey2_v)
 
 
         with open('./data/scores.json', 'w') as json_file:
@@ -54,11 +54,11 @@ def create():
 
     elif rkey1_v < rkey2_v:
         print(f'{rkey2} is bigger than {rkey1}')
-        print(f'{rkey2_v} is bigger than {rkey1_v}')
+        # print(f'{rkey2_v} is bigger than {rkey1_v}')
         scores.update({"lower": 0,})
         scores.update({"higher": 1 + scores['extra_points'],})
-        print(rkey2_v)
-        print(rkey1_v)
+        # print(rkey2_v)
+        # print(rkey1_v)
 
         with open('./data/scores.json', 'w') as json_file:
             json.dump(scores, json_file, 
@@ -137,12 +137,15 @@ def create():
     dst.paste(up, (1400,750), mask = up)
     dst.paste(down, (1800,750), mask = down)
 
-    #dst.show()
     dst.save('export/out.png')
 
-    dst = Image.new('RGB', (im1.width + im2.width, im1.height))
-    dst.paste(im1, (0, 0))
-    dst.paste(im2, (im1.width, 0))
+    return im1, im2, im1_name, im2_name, im1_results, im2_results
+
+def create2(image1, image2, image1_name, image2_name, image1_results, image2_results):
+
+    dst = Image.new('RGB', (image1.width + image2.width, image1.height))
+    dst.paste(image1, (0, 0))
+    dst.paste(image2, (image1.width, 0))
 
     # Make Darker + Blur
     enhancer = ImageEnhance.Brightness(dst)
@@ -154,7 +157,6 @@ def create():
     top_font = ImageFont.truetype("data/cera.otf", 120)
     small_font = ImageFont.truetype("data/cera.otf", 70)
     main_font = ImageFont.truetype("data/cera.otf", 160)
-    or_font = ImageFont.truetype("data/cera.otf", 100)
 
     im1_width = 560.2
     im2_width = 1685.2
@@ -163,12 +165,12 @@ def create():
     im2_height = 560
 
     # Results text
-    draw.text((im1_width, im1_height),f'"{im1_name}"',(245,147,66),font=top_font,anchor="mm")
-    draw.text((im2_width, im2_height),f'"{im2_name}"',(245,147,66),font=top_font,anchor="mm")
+    draw.text((im1_width, im1_height),f'"{image1_name}"',(245,147,66),font=top_font,anchor="mm")
+    draw.text((im2_width, im2_height),f'"{image2_name}"',(245,147,66),font=top_font,anchor="mm")
     draw.text((im1_width, im1_height*1.22),'has',(255,255,255),font=small_font,anchor="mm")
     draw.text((im2_width, im2_height*1.22),'has',(255,255,255),font=small_font,anchor="mm")
-    draw.text((im1_width, im1_height*1.5),im1_results,(245,198,69),font=main_font,anchor="mm")
-    draw.text((im2_width, im2_height*1.5),im2_results,(245,198,69),font=main_font,anchor="mm")
+    draw.text((im1_width, im1_height*1.5),image1_results,(245,198,69),font=main_font,anchor="mm")
+    draw.text((im2_width, im2_height*1.5),image2_results,(245,198,69),font=main_font,anchor="mm")
     draw.text((im1_width, im1_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
     draw.text((im2_width, im2_height*1.75),'results on the internet',(255,255,255),font=small_font,anchor="mm")
 

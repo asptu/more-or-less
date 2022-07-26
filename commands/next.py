@@ -1,7 +1,7 @@
 
 import discord
 import json
-from commands.concatenate import create
+from commands.concatenate import create, create2
 from datetime import datetime
 import time
 
@@ -21,7 +21,7 @@ async def game_next(message):
     reaction_2 = '⬇️'  
 
     print('creating...')
-    create()
+    im1, im2, im1_name, im2_name, im1_results, im2_results = create()
     print('done')
     with open('./data/scores.json') as fp:
         scores = json.load(fp)
@@ -31,7 +31,7 @@ async def game_next(message):
     dt = datetime.now()
     timestamp = int( dt.timestamp() )
     print( timestamp )
-    time_left = timestamp + 9   
+    time_left = timestamp + 10   
 
     embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
     file = discord.File("export/out.png", filename="out.png")
@@ -40,6 +40,8 @@ async def game_next(message):
 
     await sent_message.add_reaction(reaction_1) 
     await sent_message.add_reaction(reaction_2)   
+    create2(im1, im2, im1_name, im2_name, im1_results, im2_results)
+
 
     time.sleep(5)
     embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
