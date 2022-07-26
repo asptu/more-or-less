@@ -133,13 +133,23 @@ async def set_channel(message):
 
 @client.slash_command(guild_ids=[740886739538673664], description="Adds extrapoints")
 async def extrapoints(message, number: discord.Option(int),):
+
+    role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+    if role not in message.author.roles:
+        return await message.respond('invalid perms', ephemeral=True)
+
     await set_extrapoints(message, number)
     await message.respond(f'Extrapoints have been set to {number}', ephemeral=True) 
 
 @client.slash_command(guild_ids=[740886739538673664], description="Adds extrapoints")
 async def scrape(message, string: discord.Option(str),):
+
+    role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+    if role not in message.author.roles:
+        return await message.respond('invalid perms', ephemeral=True)
+
     await scraping(message, string)
-    await message.respond(f'Scraped {string}', ephemeral=True) 
+    await message.respond(f'Scraped {string}') 
 
 
 
