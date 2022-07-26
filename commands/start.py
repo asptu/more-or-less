@@ -1,7 +1,7 @@
 
 import discord
 import json
-from concatenate import create
+from commands.concatenate import create
 from datetime import datetime
 import time
 
