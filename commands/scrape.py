@@ -1,8 +1,8 @@
 import urllib.request
 from bs4 import BeautifulSoup
-from PIL import Image, ImageFilter
-from io import BytesIO
-import requests
+# from PIL import Image, ImageFilter
+# from io import BytesIO
+# import requests
 import re 
 import json
 
@@ -47,7 +47,7 @@ def scrape(search_result):
     # #d.show()
     # d.save(f'./images/{search_result}.png')
 
-    filename = './results.json'
+    filename = './data/results.json'
     dictObj = []
 
     with open(filename) as fp:

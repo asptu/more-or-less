@@ -8,7 +8,7 @@ import random
 
 def create():
      
-    with open('./results.json') as fp:
+    with open('./data/results.json') as fp:
         d = json.load(fp)
 
     rkey1 = random.choice(list(d.keys()))
@@ -33,7 +33,7 @@ def create():
     rkey1_v_formatted = simplify(int(rkey1_v))
     rkey2_v_formatted = simplify(int(rkey2_v))
 
-    with open('./scores.json') as fp:
+    with open('./data/scores.json') as fp:
             scores = json.load(fp)
 
 
@@ -46,7 +46,7 @@ def create():
         print(rkey2_v)
 
 
-        with open('./scores.json', 'w') as json_file:
+        with open('./data/scores.json', 'w') as json_file:
             json.dump(scores, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
@@ -60,7 +60,7 @@ def create():
         print(rkey2_v)
         print(rkey1_v)
 
-        with open('./scores.json', 'w') as json_file:
+        with open('./data/scores.json', 'w') as json_file:
             json.dump(scores, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
@@ -69,7 +69,7 @@ def create():
         scores.update({"lower": 1 + scores['extra_points'],})
         scores.update({"higher": 1 + scores['extra_points'],})
 
-        with open('./scores.json', 'w') as json_file:
+        with open('./data/scores.json', 'w') as json_file:
             json.dump(scores, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
@@ -138,7 +138,7 @@ def create():
     dst.paste(down, (1800,750), mask = down)
 
     #dst.show()
-    dst.save('out.png')
+    dst.save('export/out.png')
 
     dst = Image.new('RGB', (im1.width + im2.width, im1.height))
     dst.paste(im1, (0, 0))
@@ -177,6 +177,6 @@ def create():
     vs = vs.resize((128, 128))
     dst.paste(vs, (1062,700), mask = vs)
 
-    dst.save('done.png')
+    dst.save('export/done.png')
 
 

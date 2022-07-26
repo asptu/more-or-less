@@ -7,14 +7,12 @@ import time
 
 
 async def game_next(message):
-    role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
-    if role not in message.author.roles:
-        return await message.reply('invalid perms')
 
     with open('commands/message_data.json', 'r+') as f:
             data = json.load(f)
 
     await message.delete()
+    print(data['channel_id'])
     channel = await message.guild.fetch_channel(data['channel_id'])
     sent_message = await channel.fetch_message(data['message_id'])
     await sent_message.clear_reactions()
@@ -25,7 +23,7 @@ async def game_next(message):
     print('creating...')
     create()
     print('done')
-    with open('./scores.json') as fp:
+    with open('./data/scores.json') as fp:
         scores = json.load(fp)
         higher = scores['higher'] 
         lower = scores['lower']  
@@ -36,7 +34,7 @@ async def game_next(message):
     time_left = timestamp + 9   
 
     embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
-    file = discord.File("out.png", filename="out.png")
+    file = discord.File("export/out.png", filename="out.png")
     embed.set_image(url="attachment://out.png")
     await sent_message.edit(file=file, embed=embed)   
 
@@ -45,7 +43,7 @@ async def game_next(message):
 
     time.sleep(5)
     embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
-    file = discord.File("done.png", filename="done.png")
+    file = discord.File("export/done.png", filename="done.png")
     embed.set_image(url="attachment://done.png")
     await sent_message.edit(file=file, embed=embed)
 
@@ -63,7 +61,7 @@ async def game_next(message):
                             #print(f'added {user} to ones')
                             #print(user.name)
 
-                            filename = './leaderboard.json'
+                            filename = './data/leaderboard.json'
                             dictObj = []
                             
                             with open(filename) as fp:
@@ -91,7 +89,7 @@ async def game_next(message):
                             #print(f'added {user} to twos')
                             #print(user.name)
                             
-                            filename = './leaderboard.json'
+                            filename = './data/leaderboard.json'
                             dictObj = []
                             
                             with open(filename) as fp:
@@ -118,7 +116,7 @@ async def game_next(message):
     lchannel = await message.guild.fetch_channel(data['leaderboard_channel_id'])
     updated_message = await lchannel.fetch_message(data['leaderboard_message_id'])
 
-    with open('leaderboard.json', 'r') as f:
+    with open('./data/leaderboard.json', 'r') as f:
         data = json.load(f)
 
     top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}

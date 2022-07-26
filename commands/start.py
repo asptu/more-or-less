@@ -6,9 +6,6 @@ from datetime import datetime
 import time
 
 async def game_start(message):  
-    role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
-    if role not in message.author.roles:
-        return await message.reply('invalid perms')
 
     reaction_1 = '⬆️'
     reaction_2 = '⬇️'
@@ -16,7 +13,7 @@ async def game_start(message):
     print('creating...')
     create()
     print('done')
-    with open('./scores.json') as fp:
+    with open('./data/scores.json') as fp:
         scores = json.load(fp)
         higher = scores['higher'] 
         lower = scores['lower']    
@@ -26,7 +23,7 @@ async def game_start(message):
     time_left = timestamp + 9
 
     embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
-    file = discord.File("out.png", filename="out.png")
+    file = discord.File("export/out.png", filename="out.png")
     embed.set_image(url="attachment://out.png")
     sent_message = await message.channel.send(file=file, embed=embed)
 
@@ -43,7 +40,7 @@ async def game_start(message):
 
     time.sleep(5)
     embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
-    file = discord.File("done.png", filename="done.png")
+    file = discord.File("export/done.png", filename="done.png")
     embed.set_image(url="attachment://done.png")
     await sent_message.edit(file=file, embed=embed)
 
@@ -60,7 +57,7 @@ async def game_start(message):
                             ones.add(f'{user}: {reaction.emoji}')
 
 
-                            filename = './leaderboard.json'
+                            filename = './data/leaderboard.json'
                             dictObj = []
                             
                             with open(filename) as fp:
@@ -86,7 +83,7 @@ async def game_start(message):
                             twos.add(f'{user}: {reaction.emoji}')
 
                         
-                            filename = './leaderboard.json'
+                            filename = './data/leaderboard.json'
                             dictObj = []
                             
                             with open(filename) as fp:
@@ -112,7 +109,7 @@ async def game_start(message):
         data = json.load(f)
         lchannel = await message.guild.fetch_channel(data['leaderboard_channel_id'])
 
-    with open('leaderboard.json', 'r') as f:
+    with open('./data/leaderboard.json', 'r') as f:
         data = json.load(f)
 
     top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}

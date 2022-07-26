@@ -2,7 +2,7 @@ import json
 import discord
 
 async def show_leaderboard(message):  
-    with open('leaderboard.json', 'r') as f:
+    with open('./data/leaderboard.json', 'r') as f:
         data = json.load(f)
 
     top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
