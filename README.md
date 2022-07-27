@@ -18,4 +18,9 @@ Probably one of my most elaborate stupid discord games
 - [x] Make a proper embed (also wip)
 - [x] Make a countdown timer (pretty sketch, need to make better)
 - [x] Add double points command
-- [ ] OPTIMISE THE HELL OUT OF THIS ONE (this will never be finished 💀)
+- [x] Relatively optimised
+
+
+
+Note:
+*Images and fonts are not included within this repository due to licenses*
