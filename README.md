@@ -10,6 +10,7 @@ Probably one of my most elaborate stupid discord games
 - **BeautifulSoup4** (pip install beautifulsoup4)
 - **dotenv** (pip install python-dotenv)
 - **requests** (pip install requests)
+- **Pillow** (pip install Pillow)
 
 ## Planned Features
 
@@ -23,4 +24,5 @@ Probably one of my most elaborate stupid discord games
 
 
 Note:
+
 *Images and fonts are not included within this repository due to licenses*
