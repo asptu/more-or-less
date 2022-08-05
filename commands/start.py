@@ -22,7 +22,7 @@ async def game_start(message):
     timestamp = int(dt.timestamp())
     time_left = timestamp + 9
 
-    embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
+    embed = discord.Embed(title=f"React with {reaction_1} or {reaction_2}!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
     file = discord.File("export/out.png", filename="out.png")
     embed.set_image(url="attachment://out.png")
     sent_message = await message.channel.send(file=file, embed=embed)

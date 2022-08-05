@@ -31,9 +31,9 @@ async def game_next(message):
     dt = datetime.now()
     timestamp = int( dt.timestamp() )
     print( timestamp )
-    time_left = timestamp + 10   
+    time_left = timestamp + 9  
 
-    embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
+    embed = discord.Embed(title=f"React with {reaction_1} or {reaction_2}!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
     file = discord.File("export/out.png", filename="out.png")
     embed.set_image(url="attachment://out.png")
     await sent_message.edit(file=file, embed=embed)   

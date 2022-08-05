@@ -140,7 +140,7 @@ async def extrapoints(message, number: discord.Option(int),):
     await set_extrapoints(message, number)
     await message.respond(f'Extrapoints have been set to {number}', ephemeral=True) 
 
-@client.slash_command(guild_ids=[g_ids[0]], description="Adds extrapoints")
+@client.slash_command(guild_ids=[g_ids[0]], description="Scrapes data")
 async def scrape(message, string: discord.Option(str),):
 
     role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
