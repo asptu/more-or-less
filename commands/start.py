@@ -16,16 +16,19 @@ async def game_start(message):
     with open('./data/scores.json') as fp:
         scores = json.load(fp)
         higher = scores['higher'] 
-        lower = scores['lower']    
+        lower = scores['lower'] 
+        time_set = scores['time']
+
 
     dt = datetime.now()
     timestamp = int(dt.timestamp())
-    time_left = timestamp + 9
+    time_left = timestamp + time_set + 4
 
-    embed = discord.Embed(title=f"React with {reaction_1} or {reaction_2}!", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) #creates embed
+    embed = discord.Embed(title=f"Does {im2_name} have  {reaction_1}  or  {reaction_2}  results?", description=f"Finished <t:{time_left}:R>!", color=0x3B88C3) 
     file = discord.File("export/out.png", filename="out.png")
     embed.set_image(url="attachment://out.png")
     sent_message = await message.channel.send(file=file, embed=embed)
+
 
     with open('commands/message_data.json', 'r+') as f:
             data = json.load(f)
@@ -40,8 +43,8 @@ async def game_start(message):
     
     create2(im1, im2, im1_name, im2_name, im1_results, im2_results)
 
-    time.sleep(5)
-    embed = discord.Embed(title="React with :arrow_up: or :arrow_down:!", description=f"Time's up!", color=0x3B88C3) #creates embed
+    time.sleep(time_set)
+    embed = discord.Embed(title=f"Does {im2_name} have  {reaction_1}  or  {reaction_2}  results?", description=f"Time's up!", color=0x3B88C3) 
     file = discord.File("export/done.png", filename="done.png")
     embed.set_image(url="attachment://done.png")
     await sent_message.edit(file=file, embed=embed)
@@ -116,8 +119,10 @@ async def game_start(message):
 
     top_users = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
 
+    first2pairs = {k: top_users[k] for k in list(top_users)[:15]}
+
     names = ''
-    for postion, user in enumerate(top_users):
+    for postion, user in enumerate(first2pairs):
         names += f'{postion+1} - <@!{user}> with {top_users[user]}\n'
 
     embed = discord.Embed(title="Leaderboard", color=0x3B88C3)

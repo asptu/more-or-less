@@ -5,6 +5,7 @@ from commands.next import game_next
 from commands.leaderboard_channel import lchannel
 from commands.extrapoints import set_extrapoints
 from commands.scraping import scraping
+from commands.time import set_time
 
 from http import client
 import time
@@ -19,13 +20,12 @@ intents.guild_reactions = True
 intents.reactions = True
 
 client = discord.Bot(intents=intents)
-g_ids = [740886739538673664]
+g_ids = [810246233620217916]
 
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="for $ and slash commands!"))
-
 
 # Prefix commands
 
@@ -93,6 +93,17 @@ async def on_message(message):
         await scraping(message, string)
         await message.reply(f'scraped **{string}**')
 
+    if message.content.startswith('$time'):
+
+        role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+        if role not in message.author.roles:
+            return await message.reply('invalid perms')
+
+        number = message.content[6:]
+
+        print('changing time...')
+        await set_extrapoints(message, number)
+        await message.reply(f'Time has been set to {number}') 
 
 # Slash Commands
 
@@ -150,6 +161,14 @@ async def scrape(message, string: discord.Option(str),):
     await scraping(message, string)
     await message.respond(f'Scraped {string}') 
 
+@client.slash_command(guild_ids=[g_ids[0]], description="Manipulates the time")
+async def time(message, number: discord.Option(int),):
 
+    role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+    if role not in message.author.roles:
+        return await message.respond('invalid perms', ephemeral=True)
 
-client.run(os.getenv('TOKEN'))
+    await set_time(message, number)
+    await message.respond(f'Time has been set to {number}', ephemeral=True) 
+
+client.run(os.getenv('TOKEN' ))
