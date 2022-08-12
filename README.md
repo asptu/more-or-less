@@ -1,5 +1,7 @@
 # Discord More or Less (Higher or Lower)
 
+![](https://imgur.com/a/HpqIkUX)
+
 Based off of http://www.higherlowergame.com/ Discord More or Less essentially just ports the experience to your server with a couple of commands to set everything off
 
 Probably one of my most elaborate stupid discord games
