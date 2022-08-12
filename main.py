@@ -29,6 +29,7 @@ async def on_ready():
 
 # Prefix commands
 
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -154,7 +155,7 @@ async def extrapoints(message, number: discord.Option(int),):
 @client.slash_command(guild_ids=[g_ids[0]], description="Scrapes data")
 async def scrape(message, string: discord.Option(str),):
 
-    role = discord.utils.find(lambda r: r.name == 'mol', message.guild.roles)
+    role = discord.utils.find(lambda r: r.name == 'spiderverse', message.guild.roles)
     if role not in message.author.roles:
         return await message.respond('invalid perms', ephemeral=True)
 
